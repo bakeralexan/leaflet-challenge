@@ -79,11 +79,17 @@ function createMap() {
             let feature = features[i];
             let geometry = feature.geometry;
             let property = feature.properties;
-            let coordinates = geometry.coordinates.reverse();
+            let coordinates = geometry.coordinates;
             for (let i = 0; i < coordinates.length; i++) {
-                let line = [coordinates[1], coordinates[0]];
+                let coordinate = coordinates[i];
+                let c = coordinate[i];
+                // console.log(c);
+                let line = [c[1], c[0]];
+                console.log(line);
+                let lines = coordinates.coordinate.line;
+                console.log(lines);
             };
-            let plateLine = L.polyline(line).bindPopup(`<h1> ${property.PlateName}</h1>`);
+            let plateLine = L.polyline(lines).bindPopup(`<h1> ${property.PlateName}</h1>`);
             plateLine.addTo(plateLines);
         }
         return plateLines;
