@@ -1,4 +1,4 @@
-const earthquakeURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson";
+const earthquakeURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 const platesURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/339b0c56563c118307b1f4542703047f5f698fae/GeoJSON/PB2002_plates.json";
 
 
@@ -14,15 +14,38 @@ function createMap() {
     let earthquakeMarkers = L.layerGroup([]);
     d3.json(earthquakeURL).then(function (response) {
         let features = response.features;
-        
+        // put the function outside of the loop then call it in the radius thing
+        function colorChange() {
+            if (magnitude < 3.50) {
+                fillColor: "green",
+            } else if (magnitude < 5.50) {
+                fillColor: "yellow",
+            } else {
+                fillColor: "red",
+            }
+        };
+        function markerSize(magnitude) {
+            return Math.sqrt(magnitude) * 100;
+        }
+        // markerSize(magnitude)
+
         for (let i = 0; i < features.length; i++) {
             let feature = features[i];
             let geometry = feature.geometry;
             let property = feature.properties;
-            let earthquakeMarker = L.circle([geometry.coordinates[0], geometry.coordinates[1]]).bindPopup(`<h1> ${property.place}</h1><hr><h3>Magnitude: ${property.mag}</h3>`);
+            let magnitude = property.mag;
+
+
+            let earthquakeMarker = L.circle([geometry.coordinates[1], geometry.coordinates[0]], {
+                color: "white",
+                fillColor: colorChange(),
+                fillOpacity: 0.5,
+                radius: markerSize(magnitude)
+            }).bindPopup(`<h1> ${property.place}</h1><hr><h3>Magnitude: ${magnitude}</h3>`);
             earthquakeMarker.addTo(earthquakeMarkers);
         }
-        return earthquakeMarkers;
+        // return earthquakeMarkers;
+        earthquakeMarkers.addTo(myMap);
     }) 
 
     let plateLines = L.layerGroup([]);
@@ -34,8 +57,9 @@ function createMap() {
             let feature = features[i];
             let geometry = feature.geometry;
             let property = feature.properties;
-            let line = geometry.coordinates[i]
-            let plateLine = L.polyline([line]).bindPopup(`<h1> ${property.PlateName}</h1>`);
+            let line = geometry.coordinates
+            let plateLine = L.polyline([line,
+            {color: "orange"}]).bindPopup(`<h1> ${property.PlateName}</h1>`);
             plateLine.addTo(plateLines);
         }
         return plateLines;
@@ -48,7 +72,7 @@ function createMap() {
     };
     const overlayMaps = {
         Earthquakes: earthquakeMarkers,
-        Techtonic_Plates: plateLines
+        Tectonic_Plates: plateLines
     };
 
     // Create a map object, and set the default layers.
@@ -64,7 +88,7 @@ function createMap() {
         collapsed: false
     }).addTo(myMap);
 
-    console.log("Hello");
+
 }
 createMap();
 
