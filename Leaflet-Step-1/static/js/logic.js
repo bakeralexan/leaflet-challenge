@@ -13,6 +13,12 @@ function createMap() {
     });
 
     let earthquakeMarkers = L.layerGroup([]);
+    // Create a map object, and set the default layers.
+    const myMap = L.map("map", {
+        center: [35.0902, -105.7129],
+        zoom: 4,
+        layers: [street, earthquakeMarkers]
+    });
     d3.json(earthquakeURL).then(function (response) {
         let features = response.features;
 
@@ -102,7 +108,6 @@ function createMap() {
     });
 
 
-
     const baseMaps = {
         Street: street,
         Topography: topo
@@ -112,12 +117,6 @@ function createMap() {
         Tectonic_Plates: plateLines
     };
 
-    // Create a map object, and set the default layers.
-    const myMap = L.map("map", {
-        center: [35.0902, -105.7129],
-        zoom: 4,
-        layers: [street, earthquakeMarkers]
-    });
 
     // Pass our map layers into our layer control.
     // Add the layer control to the map.
