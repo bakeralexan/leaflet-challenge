@@ -23,29 +23,55 @@ function createMap() {
             let geometry = feature.geometry;
             let property = feature.properties;
             let magnitude = property.mag;
-            function colorChange() {
-                if (magnitude < 3.50) {
-                    color:"green";
-                    fiilColor: "green";
-                } else if (magnitude < 5.50) {
-                    color:"yellow";
-                    fillColor: "yellow";
-                } else {
-                    color: "red";
-                    fillColor: "red";
-                }
-            };
+            // gradient: {
+            //     '.5': 'green',
+            //     '.8': 'yellow',
+            //     '.95': 'red'
+            // },
+            // maxOpacity: .9,
+            // minOpacity: .3,
+
             function markerSize(magnitude) {
                 if (magnitude != 0 || magnitude != "NaN") {
                     return magnitude * 1000;
                 } else{
                     magnitude = 0;
                 }
-            }
+            };
+            function colorChange(magnitude) {
+                if (magnitude < 3.50) {
+                    color:"green";
+
+                    return magnitude;
+                } else if (magnitude < 5.50) {
+                    color:"yellow";
+
+                    return magnitude;
+                } else {
+                    color: "red";
+
+                    return magnitude;
+                }
+            }; 
+            function fillColorChange(magnitude) {
+                if (magnitude < 3.50) {
+
+                    fiilColor: "green";
+                    return magnitude;
+                } else if (magnitude < 5.50) {
+
+                    fillColor: "yellow";
+                    return magnitude;
+                } else {
+
+                    fillColor: "red";
+                    return magnitude;
+                }
+            };
 
             let earthquakeMarker = L.circle([geometry.coordinates[1], geometry.coordinates[0]], {
-                color: colorChange(),
-                fillColor: colorChange(),
+                color: colorChange(magnitude),
+                fillColor: fillColorChange(magnitude),
                 fillOpacity: 0.5,
                 radius: markerSize(magnitude)
             }).bindPopup(`<h1> ${property.place}</h1><hr><h3>Magnitude: ${magnitude}</h3>`);
