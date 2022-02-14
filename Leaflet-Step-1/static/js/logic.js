@@ -49,26 +49,51 @@ function createMap() {
         earthquakeMarkers.addTo(myMap);
     }) 
 
-    let legend = L.control({ position: "bottomright" });
+        // let legend = L.control({ position: "bottomright" });
+        // legend.onAdd = function() {
+        //     let div = L.DomUtil.create("div", "info legend");
+        //     let limits = earthquakeMarkers.options.limits;
+        //     let colors = earthquakeMarkers.options.colors;
+        //     let labels = [];
+        //     let legendInfo = "<h1>Magnitude</h1>" +
+        //         "<div class=\"labels\">" +
+        //         "<div class=\"min\">" + limits[0] + "</div>" +
+        //         "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+        //         "</div>";
+        //     div.innerHTML = legendInfo;
+        //     limits.forEach(function(limit, index) {
+        //         labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+        //     });
+    
+        //     div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+        //     return div;
+        //     legend.addTo(myMap);
+        //     console.log(legend);
+        // };
+    let legend = L.control({position: "bottomright"});
+    // Then add all the details for the legend
     legend.onAdd = function() {
-        let div = L.DomUtil.create("div", "info legend");
-        let limits = earthquakeMarkers.options.limits;
-        let colors = earthquakeMarkers.options.colors;
-        let labels = [];
-        let legendInfo = "<h1>Magnitude</h1>" +
-            "<div class=\"labels\">" +
-            "<div class=\"min\">" + limits[0] + "</div>" +
-            "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-            "</div>";
-        div.innerHTML = legendInfo;
-        limits.forEach(function(limit, index) {
-            labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-        });
-  
-        div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+    let div = L.DomUtil.create("div", "info legend");
+    const magnitudes = [0, 2.5, 5.4, 6.0, 7.9, 9];
+    const colors = [
+        "#2E7F18",
+        "#45731E",
+        "#675E24",
+        "#8D472B",
+        "#B13433",
+        "#C82538"
+    ];
+    for (let i = 0; i < magnitudes.length; i++) {
+        console.log(colors[i]);
+        div.innerHTML +=
+            "<i style='background: " + colors[i] + "'></i> " +
+            magnitudes[i] + (magnitudes[i + 1] ? "&ndash;" + magnitudes[i + 1] + "<br>" : "+");
+        }
         return div;
-        legend.addTo(myMap);
     };
+
+    // Finally, we our legend to the map.
+    legend.addTo(map);
 
     let plateLines = L.layerGroup([]);
     d3.json(platesURL).then(function createPlates(response) {
