@@ -1,6 +1,6 @@
 # leaflet-challenge
 This is an example of interactive map visualization using leaflet and JavaScript.
-<a href="index.html">Interactive Mape</a>
+
 
 ## Background
 
