@@ -71,37 +71,11 @@ function createMap() {
     };
 
     let plateLines = L.layerGroup([]);
-
     d3.json(platesURL).then(function createPlates(response) {
-        let features = response.features;
+         L.geoJson(response)
+             .addTo(plateLines);
+    });
 
-        for (let i = 0; i < features.length; i++) {
-            let feature = features[i];
-            let geometry = feature.geometry;
-            let property = feature.properties;
-            let coordinates = geometry.coordinates;
-            // console.log("unsorted", coordinates);
-            for (let i = 0; i < coordinates.length; i++) {
-                // let coordinate = coordinates[i];
-                // console.log("Coordinate", coordinate);
-                // let coord = coordinate[i];
-                // let c = coord[i];
-                let line = [coordinates[i[i[1]]], coordinates[i[i[0]]]];
-                // console.log("C", c);
-                // console.log("Line", line);
-                // let sortedC = coordinates[i[i[i]]].sort((a,b) => a-b);
-                // console.log("Sorted", sortedC);
-                // let lines = lines.append(line);
-                // console.long(lines);
-                let plateLine = L.polyline(line).bindPopup(`<h1> ${property.PlateName}</h1>`);
-                plateLine.addTo(plateLines);
-
-            };
-
-            
-        }
-        return plateLines;
-    })
 
 
     const baseMaps = {
