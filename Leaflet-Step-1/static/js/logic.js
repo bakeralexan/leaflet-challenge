@@ -80,17 +80,25 @@ function createMap() {
             let geometry = feature.geometry;
             let property = feature.properties;
             let coordinates = geometry.coordinates;
+            // console.log("unsorted", coordinates);
             for (let i = 0; i < coordinates.length; i++) {
-                let coordinate = coordinates[i];
-                let c = coordinate[i];
-                // console.log(c);
-                let line = [c[1], c[0]];
-                console.log(line);
-                let lines = coordinates.coordinate.line;
-                console.log(lines);
+                // let coordinate = coordinates[i];
+                // console.log("Coordinate", coordinate);
+                // let coord = coordinate[i];
+                // let c = coord[i];
+                let line = [coordinates[i[i[1]]], coordinates[i[i[0]]]];
+                // console.log("C", c);
+                // console.log("Line", line);
+                // let sortedC = coordinates[i[i[i]]].sort((a,b) => a-b);
+                // console.log("Sorted", sortedC);
+                // let lines = lines.append(line);
+                // console.long(lines);
+                let plateLine = L.polyline(line).bindPopup(`<h1> ${property.PlateName}</h1>`);
+                plateLine.addTo(plateLines);
+
             };
-            let plateLine = L.polyline(lines).bindPopup(`<h1> ${property.PlateName}</h1>`);
-            plateLine.addTo(plateLines);
+
+            
         }
         return plateLines;
     })
