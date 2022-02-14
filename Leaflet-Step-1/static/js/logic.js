@@ -36,12 +36,28 @@ d3.json(earthquakeURL).then(function (response) {
             }
         };
         function colorChange(magnitude) {
-            if (magnitude < 2.5) return "#2E7F18";
-            else if (magnitude < 5.4) return "#45731E";
-            else if (magnitude < 6.0) return "#675E24";
-            else if (magnitude < 6.9) return "#8D472B";
-            else if (magnitude < 7.9) return "#B13433";
-            else return " #C82538";
+            // if (magnitude < 2.5) return "#2E7F18";
+            // else if (magnitude < 5.4) return "#45731E";
+            // else if (magnitude < 6.0) return "#675E24";
+            // else if (magnitude < 6.9) return "#8D472B";
+            // else if (magnitude < 7.9) return "#B13433";
+            // else return " #C82538";
+            if (magnitude > 5) {
+                return "#ea2c2c";
+              }
+              if (magnitude > 4) {
+                return "#ea822c";
+              }
+              if (magnitude > 3) {
+                return "#ee9c00";
+              }
+              if (magnitude > 2) {
+                return "#eecc00";
+              }
+              if (magnitude > 1) {
+                return "#d4ee00";
+              }
+              return "#98ee00";
         }; 
 
         let earthquakeMarker = L.circle([geometry.coordinates[1], geometry.coordinates[0]], {
@@ -80,14 +96,23 @@ let legend = L.control({position: "bottomright"});
 // Then add all the details for the legend
 legend.onAdd = function() {
 let div = L.DomUtil.create("div", "info legend");
-const magnitudes = [0, 2.5, 5.4, 6.0, 7.9, 9];
+// const magnitudes = [0, 2.5, 5.4, 6.0, 7.9, 9];
+// const colors = [
+//     // "#2E7F18",
+//     // "#45731E",
+//     // "#675E24",
+//     // "#8D472B",
+//     // "#B13433",
+//     // "#C82538"
+// ];
+const magnitudes = [0, 1, 2, 3, 4, 5];
 const colors = [
-    "#2E7F18",
-    "#45731E",
-    "#675E24",
-    "#8D472B",
-    "#B13433",
-    "#C82538"
+  "#98ee00",
+  "#d4ee00",
+  "#eecc00",
+  "#ee9c00",
+  "#ea822c",
+  "#ea2c2c"
 ];
 for (let i = 0; i < magnitudes.length; i++) {
     console.log(colors[i]);
