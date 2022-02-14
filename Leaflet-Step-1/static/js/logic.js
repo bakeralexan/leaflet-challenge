@@ -15,29 +15,36 @@ function createMap() {
     d3.json(earthquakeURL).then(function (response) {
         let features = response.features;
         // put the function outside of the loop then call it in the radius thing
-        function colorChange() {
-            if (magnitude < 3.50) {
-                fillColor: "green",
-            } else if (magnitude < 5.50) {
-                fillColor: "yellow",
-            } else {
-                fillColor: "red",
-            }
-        };
-        function markerSize(magnitude) {
-            return Math.sqrt(magnitude) * 100;
-        }
-        // markerSize(magnitude)
+
+
 
         for (let i = 0; i < features.length; i++) {
             let feature = features[i];
             let geometry = feature.geometry;
             let property = feature.properties;
             let magnitude = property.mag;
-
+            function colorChange() {
+                if (magnitude < 3.50) {
+                    color:"green";
+                    fiilColor: "green";
+                } else if (magnitude < 5.50) {
+                    color:"yellow";
+                    fillColor: "yellow";
+                } else {
+                    color: "red";
+                    fillColor: "red";
+                }
+            };
+            function markerSize(magnitude) {
+                if (magnitude != 0 || magnitude != "NaN") {
+                    return magnitude * 1000;
+                } else{
+                    magnitude = 0;
+                }
+            }
 
             let earthquakeMarker = L.circle([geometry.coordinates[1], geometry.coordinates[0]], {
-                color: "white",
+                color: colorChange(),
                 fillColor: colorChange(),
                 fillOpacity: 0.5,
                 radius: markerSize(magnitude)
@@ -57,9 +64,11 @@ function createMap() {
             let feature = features[i];
             let geometry = feature.geometry;
             let property = feature.properties;
-            let line = geometry.coordinates
-            let plateLine = L.polyline([line,
-            {color: "orange"}]).bindPopup(`<h1> ${property.PlateName}</h1>`);
+            let coordinates = geometry.coordinates.reverse();
+            for (let i = 0; i < coordinates.length; i++) {
+                let line = [coordinates[1], coordinates[0]];
+            };
+            let plateLine = L.polyline(line).bindPopup(`<h1> ${property.PlateName}</h1>`);
             plateLine.addTo(plateLines);
         }
         return plateLines;
