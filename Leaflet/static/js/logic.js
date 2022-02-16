@@ -37,28 +37,13 @@ d3.json(earthquakeURL).then(function (response) {
             }
         };
         function colorChange(magnitude) {
-            // if (magnitude < 2.5) return "#98ee00";
-            // else if (magnitude < 5.4) return "#d4ee00";
-            // else if (magnitude < 6.0) return "#eecc00";
-            // else if (magnitude < 6.9) return "#8D472B";
-            // else if (magnitude < 7.9) return "#B13433";
-            // else return " #C82538";
-            if (magnitude > 5) {
-                return "#ea2c2c";
-              }
-              if (magnitude > 4) {
-                return "#ea822c";
-              }
-              if (magnitude > 3) {
-                return "#ee9c00";
-              }
-              if (magnitude > 2) {
-                return "#eecc00";
-              }
-              if (magnitude > 1) {
-                return "#d4ee00";
-              }
-              return "#98ee00";
+            if (magnitude < 1) return "#98ee00";
+            else if (magnitude < 2) return "#d4ee00";
+            else if (magnitude < 3) return "#eecc00";
+            else if (magnitude < 4) return "#ee9c00";
+            else if (magnitude < 5) return "#ea822c";
+            else return " #ea2c2c";
+
         }; 
 
         let earthquakeMarker = L.circle([geometry.coordinates[1], geometry.coordinates[0]], {
@@ -66,7 +51,7 @@ d3.json(earthquakeURL).then(function (response) {
             fillColor: colorChange(magnitude),
             fillOpacity: 0.75,
             radius: markerSize(magnitude)
-        }).bindPopup(`<h1> ${property.place}</h1><hr><h3>Magnitude: ${magnitude}</h3>`);
+        }).bindPopup(`<h1> Magnitude: ${magnitude}</h1><hr><h3>Location: ${property.place}</h3>`);
         earthquakeMarker.addTo(earthquakeMarkers);
     }
     earthquakeMarkers.addTo(myMap);
