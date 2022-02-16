@@ -12,16 +12,17 @@ const satellite = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite
     maxZoom: 18,
     accessToken: API_KEY
 });
-const outdoors = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox://styles/mapbox/outdoors-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+const navigation = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/navigation-day-v1/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY
 });
-const dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox://styles/mapbox://styles/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+const dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY
 });
+
 let earthquakeMarkers = L.layerGroup([]);
 // Create a map object, and set the default layers.
 const myMap = L.map("map", {
@@ -102,7 +103,7 @@ d3.json(platesURL).then(function createPlates(response) {
 const baseMaps = {
     Street: street,
     Satellite: satellite,
-    Outdoors: outdoors,
+    Navigation: navigation,
     Dark: dark
 };
 const overlayMaps = {

@@ -30,7 +30,7 @@ Visualize an earthquake data set.
 ```const earthquakeURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";```
 
    Create a map using Leaflet that plots all of the earthquakes from your data set based on their longitude and latitude.
-   
+
 ```const street= L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -118,7 +118,7 @@ for (let i = 0; i < magnitudes.length; i++) {
 legend.addTo(myMap);```
 ![Streetmap](Leaflet/Images/streetmap.png)
 
-![Sattelite](Leaflet/Images/sattelite.png)
+![Sattelite](Leaflet/Images/satellite.png)
 The USGS wants you to plot a second data set on your map to illustrate the relationship between tectonic plates and seismic activity. You will need to pull in a second data set and visualize it alongside your original set of data. Data on tectonic plates can be found at <https://github.com/fraxen/tectonicplates>.
 
 * Plot a second data set on our map.
@@ -126,6 +126,17 @@ The USGS wants you to plot a second data set on your map to illustrate the relat
 ```const platesURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/339b0c56563c118307b1f4542703047f5f698fae/GeoJSON/PB2002_plates.json";```
 
 * Add a number of base maps to choose from as well as separate out our two different data sets into overlays that can be turned on and off independently.
+```const navigation = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/navigation-day-v1/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    accessToken: API_KEY
+});
+const dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    accessToken: API_KEY
+});```
+
 
 ```let plateLines = L.layerGroup([]);
 d3.json(platesURL).then(function createPlates(response) {
@@ -136,7 +147,9 @@ d3.json(platesURL).then(function createPlates(response) {
 
 const baseMaps = {
     Street: street,
-    Satellite: satellite
+    Satellite: satellite,
+    Navigation: navigation,
+    Dark: dark
 };
 const overlayMaps = {
     Earthquakes: earthquakeMarkers,
@@ -150,3 +163,5 @@ const overlayMaps = {
 }).addTo(myMap);```
 
 ![Tectonic](Leaflet/Images/tectonic.png)
+![Navigation](Leaflet/Images/navigation.png)
+![Dark](Leaflet/Images/dark.png)
