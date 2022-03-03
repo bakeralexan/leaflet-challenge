@@ -1,5 +1,7 @@
 # leaflet-challenge
-This is an example of interactive map visualization using leaflet and JavaScript.
+<a href="https://bakeralexan.github.io/leaflet-challenge/">This is an example of interactive map visualization using leaflet and JavaScript.</a>
+
+<a href="https://bakeralexan.github.io/leaflet-challenge/">https://bakeralexan.github.io/leaflet-challenge/</a>
 
 
 ## Background
